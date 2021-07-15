@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Set variables
-ipaddress=$(ifconfig epair0b | awk '/inet/ { print $2 }'| sed -e 's/[]$.*[\^]/\\&/g')
 password_secret=$(pwgen -N 1 -s 96)
 root_password_sha2=$(echo -n graylog | shasum -a 256 | tr -d "  -")
 
@@ -27,7 +26,7 @@ sed -i graylog.conf 's/node\_id\_file\ \=\ \/etc\/graylog\/server\/node-id/node\
 sed -i graylog.conf 's/bin\_dir\ \=\ bin/\bin\_dir\ \=\ \/usr\/local\/share\/graylog/g' /usr/local/etc/graylog/graylog.conf
 sed -i graylog.conf 's/plugin\_dir\ \=\ plugin/\plugin\_dir\ \=\ \/usr\/local\/share\/graylog\/plugin/g' /usr/local/etc/graylog/graylog.conf
 sed -i graylog.conf 's/data\_dir\ \=\ data/\data\_dir\ \=\ \/usr\/local\/share\/graylog/g' /usr/local/etc/graylog/graylog.conf
-sed -i -e "s/\#http\_bind\_address\ \=\ 127\.0\.0\.1\:9000/http\_bind\_address\ \= $ipaddress\:9000/g" /usr/local/etc/graylog/graylog.conf
+sed -i -e "s/\#http\_bind\_address\ \=\ 127\.0\.0\.1\:9000/http\_bind\_address\ \= 0\.0\.0\.0\:9000/g" /usr/local/etc/graylog/graylog.conf
 sed -i graylog.conf 's/message\_journal\_dir\ \=\ data\/journal/message\_journal\_dir\ \=\ \/usr\/local\/share\/graylog\/journal/g' /usr/local/etc/graylog/graylog.conf
 sed -i -e "s/password\_secret\ \=/password\_secret\ \=\ $password_secret/g" /usr/local/etc/graylog/graylog.conf
 sed -i -e "s/root\_password\_sha2\ \=/root\_password\_sha2\ \=\ $root_password_sha2/g" /usr/local/etc/graylog/graylog.conf
