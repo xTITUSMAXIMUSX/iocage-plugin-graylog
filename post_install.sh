@@ -3,7 +3,7 @@
 # Set variables
 ipaddress=$(ifconfig epair0b | awk '/inet/ { print $2 }'| sed -e 's/[]$.*[\^]/\\&/g')
 password_secret=$(pwgen -N 1 -s 96)
-root_password_sha2=$(echo -n graylog | shasum -a 256)
+root_password_sha2=$(echo -n graylog | shasum -a 256 | tr -d "  -")
 
 # Enable services
 sysrc graylog_enable="YES"
