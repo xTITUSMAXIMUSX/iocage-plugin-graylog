@@ -10,7 +10,7 @@ sysrc graylog_enable="YES"
 sysrc elasticsearch_enable="YES"
 sysrc mongod_enable="YES"
 
-# Update elasticsearch.yaml and start 
+# Update elasticsearch.yaml, start elasticsearch and mongod
 sed -i elasticsearch.yml 's/\#cluster\.name\:\ my\-application/cluster\.name\:\ graylog/g' /usr/local/etc/elasticsearch/elasticsearch.yml
 service elasticsearch start
 service mongod start
